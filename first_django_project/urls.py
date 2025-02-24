@@ -24,6 +24,7 @@ def redirect_to_tech_gadgets(request):
     return redirect('tech_gadgets/', permanent=True)
 
 urlpatterns = [
+    path('admin/', admin.site.urls),
     path("", redirect_to_tech_gadgets),
     path('tech_gadgets/', include('tech_gadgets.urls')),
 ]

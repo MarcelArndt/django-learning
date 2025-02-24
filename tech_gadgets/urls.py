@@ -25,10 +25,7 @@ urlpatterns = [
     path('gadgets/',  GadgetsView.as_view()),
     path('gadgets/<int:gadgets_id>', RedirectGadgets.as_view()),
     path('gadgets/<slug:gadgets_slug>', GadgetsView.as_view(), name='gadgets_slug_url'),
-
     path('factory/<int:factory_id>', ManafatcoryRedirect.as_view()),
     path('factory/<slug:factory_slug>', Manafatcory.as_view(), name = 'factory_slug_url'),
     path('factory/post', Manafatcory.as_view()),
-
-
 ]

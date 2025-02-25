@@ -4,7 +4,7 @@ from django.db import models
 
 class Customer(models.Model):
     first_name = models.CharField(max_length=30, help_text='max- 30 letters are allowed')
-    second_name = models.CharField(max_length=30)
+    last_name = models.CharField(max_length=30)
     newsletter_abo = models.BooleanField(default=False)
     email_address = models.CharField(max_length=30, blank=True,default='max-musterman@web.de' )
     account = models.FloatField(blank=True, null=True)
@@ -15,7 +15,7 @@ class Customer(models.Model):
         ordering=['first_name'] #wonach anfangs sotiert werden soll
 
     def __str__(self):
-        return f"{self.first_name} {self.second_name}"
+        return f"{self.first_name} {self.last_name}"
 
 # Die Produke müssen nichgt wissen, wo in welcher Order sie drin sind.
 class Product(models.Model):
@@ -31,17 +31,17 @@ class Bill(models.Model):
     is_paid = models.BooleanField(default=False)
 
 # Aber eine Order kann mehrere Produkte beinhalten und muss über diese bescheit wissen.
-# (through='Product_type') Product_type da erst später deffiniert werden kann.
-# Product_type dient als zwischenInformation
+# (through='Producttype') Producttype da erst später deffiniert werden kann.
+# Producttype dient als zwischenInformation
 class Order(models.Model):
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
-    products = models.ManyToManyField(Product, through='Product_type')
+    products = models.ManyToManyField(Product, through='Producttype')
     bill = models.OneToOneField(Bill, on_delete=models.CASCADE)
     # many-to-one Customer
     # one-to-one Bill
     # many-to-many Product
 
-class Product_type(models.Model):
+class Producttype(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     type_name = models.CharField(max_length=300)  
